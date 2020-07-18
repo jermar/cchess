@@ -1,0 +1,35 @@
+clbytes EQU 020h
+rows    EQU 256
+g_plane EQU 0a000h
+rgb     EQU 0cch
+
+	ORG 1000h
+
+	LXI SP, g_plane + (rows * clbytes)
+	LXI D, 0ffffh
+	LXI B, 0800h
+
+; provede se 8 * 256 krat
+row:
+	ORI 8
+	OUT rgb
+	PUSH D
+	PUSH D
+	INR A
+	DCR C
+	JNZ row
+	INR A                  ; posun barvu na zacatku nove rady kosticek
+	DCR B
+	JNZ row
+
+spin:
+	MVI B, 0ah
+loop:
+	DCR C
+	JNZ loop
+	DCR B
+	JNZ loop
+
+	INR A
+	OUT 0c0h
+	JMP spin
