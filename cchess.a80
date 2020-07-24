@@ -9,7 +9,7 @@ rgb     EQU 0cch
 	LXI D, 0ffffh
 	LXI B, 0800h
 
-; provede se 8 * 256 krat
+; will be executed 8 * 256 times
 row:
 	ORI 8
 	OUT rgb
@@ -18,7 +18,7 @@ row:
 	INR A
 	DCR C
 	JNZ row
-	INR A                  ; posun barvu na zacatku nove rady kosticek
+	INR A                  ; rotate color upon a new row
 	DCR B
 	JNZ row
 
